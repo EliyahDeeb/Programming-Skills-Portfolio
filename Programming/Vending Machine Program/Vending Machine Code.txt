@@ -1,0 +1,228 @@
+foods = {
+    'A1A01':{
+     "foodID": "A1A01",
+     "foodNAME":"Lays Chips (Salted)",
+     "foodCOST":2.25,
+     "stock": 10},
+    
+    'A1A02':{
+     "foodID": "A1A02",
+     "foodNAME":"Lays Chips (Cheese)",
+     "foodCOST":2.25,
+     "stock": 10},
+    
+    'A1A03':{
+     "foodID": "A1A03",
+     "foodNAME":"Lays Chips (Ketchup)",
+     "foodCOST":2.25,
+     "stock": 10},
+    
+    'A1A04':{
+     "foodID": "A1A04",
+     "foodNAME":"Lays Chips (Spicy)",
+     "foodCOST":2.25,
+     "stock": 10},
+    
+    'A1A05':{
+     "foodID": "A1A05",
+     "foodNAME":"Lays Chips (BBQ)",
+     "foodCOST":2.25,
+     "stock": 10},
+    
+    'A1A06':{
+     "foodID": "A1A06",
+     "foodNAME":"Cheetos (Cheese)",
+     "foodCOST":3.25,
+     "stock": 10},
+    
+    'A1A07':{
+     "foodID": "A1A07",
+     "foodNAME":"Cheetos (Spicy)",
+     "foodCOST":3.75,
+     "stock": 10},
+    
+    'A1A08':{
+     "foodID": "A1A08",
+     "foodNAME":"Fritos",
+     "foodCOST":4.25,
+     "stock": 10},
+    
+    'A1A09':{
+     "foodID": "A1A09",
+     "foodNAME":"Doritos (Cheese)",
+     "foodCOST":3.50,
+     "stock": 10},
+    
+    'A1A10':{
+     "foodID": "A1A10",
+     "foodNAME":"Doritos (Sweet n Spicy)",
+     "foodCOST":3.75,
+     "stock": 10},
+}
+
+drinks = {
+    'B1A01':{
+     "drinkID": "B1A01",
+     "drinkNAME":"Al-Ain Water",
+     "drinkCOST":2.25,
+     "stock": 10},
+    
+    'B1A02':{
+     "drinkID": "B1A02",
+     "drinkNAME":"Al-Ain Water (Zero)",
+     "drinkCOST":2.00,
+     "stock": 10},
+    
+    'B1A03':{
+     "drinkID": "B1A03",
+     "drinkNAME":"Barakat Mango Juice",
+     "drinkCOST":2.50,
+     "stock": 10},
+    
+    'B1A04':{
+     "drinkID": "B1A04",
+     "drinkNAME":"Barakat Apple Juice",
+     "drinkCOST":2.50,
+     "stock": 10},
+    
+    'B1A05':{
+     "drinkID": "B1A05",
+     "drinkNAME":"Barakat Orange Juice",
+     "drinkCOST":2.50,
+     "stock": 10},
+    
+    'B1A06':{
+     "drinkID": "B1A06",
+     "drinkNAME":"Barakat Cocktail Juice",
+     "drinkCOST":2.50,
+     "stock": 10},
+    
+    'B1A07':{
+     "drinkID": "B1A07",
+     "drinkNAME":"Barakat Pineapple Juice",
+     "drinkCOST":2.50,
+     "stock": 10},
+    
+    'B1A08':{
+     "drinkID": "B1A08",
+     "drinkNAME":"Barakat Watermelon Juice",
+     "drinkCOST":2.50,
+     "stock": 10},
+    
+    'B1A09':{
+     "drinkID": "B1A09",
+     "drinkNAME":"Barakat Water Juice",
+     "drinkCOST":2.75,
+     "stock": 10},
+    
+    'B1A10':{
+     "drinkID": "B1A10",
+     "drinkNAME":"Barakat Saudi Coffee Energy Water Juice",
+     "drinkCOST":2.75,
+     "stock": 10},
+}
+
+def foodlist():
+    for key, food in foods.items(): 
+        print(f"\nID: {key} \nName: {food['foodNAME']} \nPrice: {food['foodCOST']}AED \nStock: {food['stock']}")
+
+def drinklist():
+    for key, drink in drinks.items():
+            print(f"\nID: {key} \nName: {drink['drinkNAME']} \nPrice: {drink['drinkCOST']}AED \nStock: {drink['stock']}")
+    
+
+def food_select():
+    global amount_due
+    while True:
+        select_food = input("\n\n\nEnter the Item's ID that you wish to purchase: ")
+        if select_food in foods:
+            selected_food = foods[select_food]
+            if selected_food['stock'] > 0:
+                print(f"\n{selected_food['foodNAME']} is added to the basket.") 
+                amount_due = selected_food['foodCOST']
+                selected_food['stock'] -= 1
+                break
+            else:
+                print("Sorry, this item is out of stock. Please choose another item.")
+        else:
+            print("Invalid item. Please try again.")
+
+def drink_select():
+    global amount_due
+    while True:
+        select_drink = input("\n\n\nEnter the Item's ID that you wish to purchase: ")
+        if select_drink in drinks:
+            selected_drink = drinks[select_drink]
+            if selected_drink['stock'] > 0:
+                print(f"\n{selected_drink['drinkNAME']} has been selected.") 
+                amount_due = selected_drink['drinkCOST']
+                selected_drink['stock'] -= 1
+                break
+            else:
+                print("Sorry, this item is out of stock. Please choose another item.")
+        else:
+            print("Invalid item. Please try again.")
+
+def payment_method_food(foodCOST):
+    while True:
+        try:
+            payment_food = float(input(f"Enter {foodCOST} AED: "))
+            if payment_food >= foodCOST:
+                global change
+                change = payment_food - foodCOST
+                return payment_food
+            else:
+                print(f"Invalid. Please enter {foodCOST} AED.")
+        except ValueError:
+            print("Invalid input.")
+            
+def payment_method_drink(drinkCOST):
+    while True:
+        try:
+            payment_drink = float(input(f"Enter {drinkCOST} AED: "))
+            if payment_drink >= drinkCOST:
+                global change
+                change = payment_drink - drinkCOST
+                return payment_drink
+            else:
+                print(f"Invalid. Please enter {drinkCOST} AED.")
+        except ValueError:
+            print("Invalid input.")
+
+def spare_change_food(price, payment):
+    global foodchange
+    foodchange = payment - price
+    if foodchange > 0:
+        print(f"Payment Successful! {foodchange} AED is provided to you as change. Thank you for using the vending machine!")
+    
+    elif foodchange == 0:
+        print("Payment Successful! Thank you for using the vending machine!")
+    
+    else:
+        print("Insufficient payment. Please try again.")
+
+def spare_change_drink(price, payment):
+    global drinkchange
+    drinkchange = payment - price
+    if drinkchange > 0:
+        print(f"Payment Successful! {drinkchange} AED is provided to you as change. Thank you for using the vending machine!")
+    
+    elif drinkchange == 0:
+        print("Payment Successful! Thank you for using the vending machine!")
+    
+    else:
+        print("Insufficient payment. Please try again.")
+    
+
+a = input("Please select an option (1 for Food, 2 for Drinks): ")
+if a == '1':
+    foodlist()
+    food_select()
+    food_payment = payment_method_food(amount_due)
+    spare_change_food(amount_due, food_payment)
+    
+if a == '2':
+    drinklist()
+    drink_select()
+    drink_payment = payment_method_drink(amount_due)
+    spare_change_drink(amount_due, drink_payment)
